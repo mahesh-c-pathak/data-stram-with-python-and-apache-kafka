@@ -75,6 +75,8 @@ source venv/bin/activate
 deactivate
 
 * kafka-python
+python -m venv venv
+source venv/bin/activate
 pip install kafka-python
 pip install Faker
 #
