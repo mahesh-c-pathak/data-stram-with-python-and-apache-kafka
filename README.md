@@ -28,11 +28,28 @@ url = "GET https://www.googleapis.com/youtube/v3/playlists"
     $ JMX_PORT=8004 bin/kafka-server-start.sh config/server.properties
 
     # install kafka manager- GUI
+
+   - need JAVA 11 => install java 11
+
     goto https://github.com/yahoo/CMAK
     git clone https://github.com/yahoo/CMAK.git
     cd CMAK
     ./sbt clean dist
 
+   -inside CMAK folder there is target folder
+   cd target
+   cd universal
+   unzip cmak-3.0.0.7.zip
+   cd cmak-3.0.0.7/
+   cd conf
+   nano application.conf
+   cmak.zkhosts="kafka-manager-zookeeper:2181"
+   cmak.zkhosts="localhost:2181"
+   - to run kafka manager 
+   bin/cmak -Dconfig.file=conf/application.conf -Dhttp.port=8080
+   
+   
+   
 
 
 
