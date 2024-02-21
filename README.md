@@ -70,14 +70,19 @@ url = "GET https://www.googleapis.com/youtube/v3/playlists"
 
 
 ** python vertual enviornment
+```
 python -m venv venv
+
 source venv/bin/activate
-deactivate
+
+source venv/bin/deactivate
 
 * kafka-python
 python -m venv venv
 source venv/bin/activate
 pip install kafka-python
 pip install Faker
+
+```
 #
 
