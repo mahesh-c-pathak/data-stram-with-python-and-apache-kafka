@@ -15,5 +15,5 @@ if __name__ == "__main__":
     while 1==1:
         registered_user = get_registerd_user()
         print(registered_user)
-        producer.send("my_topic", registered_user)
+        producer.send("quickstart-events", registered_user)
         time.sleep(4)
