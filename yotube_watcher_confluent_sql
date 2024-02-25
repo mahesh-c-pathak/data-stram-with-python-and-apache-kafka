@@ -1,0 +1,58 @@
+```
+SELECT *
+FROM  YOUTUBE_VIDEOS 
+EMIT CHANGES;
+
+CREATE TABLE youtube_changes WITH (KAFKA_TOPIC = 'youtube_changes') AS 
+SELECT
+ video_id,
+ latest_by_offset(title) as title,
+ latest_by_offset(comments, 2)[1] as comments_previous,
+ latest_by_offset(comments, 2)[2] as comments_current,
+ latest_by_offset(views, 2)[1] as views_previous,
+ latest_by_offset(views, 2)[2] as views_current,
+ latest_by_offset(likes, 2)[1] as likes_previous,
+ latest_by_offset(likes, 2)[2] as likes_current
+ 
+FROM  YOUTUBE_VIDEOS 
+GROUP BY video_id;
+
+
+SELECT *
+FROM YOUTUBE_CHANGES
+WHERE likes_current <> likes_previous
+EMIT CHANGES;
+
+
+
+
+CREATE STREAM telegram_outbox (
+  `chat_id` VARCHAR,
+  `text` VARCHAR) WITH (
+  KAFKA_TOPIC = 'telegram_outbox',
+  PARTITIONS = 1,
+  VALUE_FORMAT = 'avro');
+
+INSERT INTO telegram_outbox (
+  `chat_id`,
+  `text`) VALUES (
+  '6572922973',
+  'Yes'
+);
+
+CREATE STREAM yotube_changes_stream WITH (KAFKA_TOPIC = 'youtube_changes', VALUE_FORMAT = 'avro');
+
+INSERT INTO telegram_outbox 
+SELECT 
+ '6572922973' AS `chat_id`,
+ CONCAT(
+   'Likes Changed!',
+   CAST(likes_previous AS STRING),
+   ' => ',
+   CAST(likes_current AS STRING),
+   '. ',
+   title) AS `text`
+FROM  YOTUBE_CHANGES_STREAM 
+WHERE likes_current <> likes_previous;
+
+```
