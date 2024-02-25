@@ -86,3 +86,7 @@ pip install Faker
 ```
 #
 
+```
+pip install confluent_kafka
+pip install fastavro
+```
