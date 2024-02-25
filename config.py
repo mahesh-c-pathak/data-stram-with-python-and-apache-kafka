@@ -1,5 +1,5 @@
 config={
-    "google_api_key":"AIzaSyCj7HabANwlVAnoxj9OX-pgWNm7u5pMs-k",
+    "google_api_key":"....",
     "youtube_playlist_id":"PLa7VYi0yPIH0IpUKXb3q7NSjpJGO9GGGZ",
     "kafka": {
         "bootstrap.servers": "pkc-7xoy1.eu-central-1.aws.confluent.cloud:9092",
